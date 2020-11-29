@@ -1,38 +1,14 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'sqlite3'
+require 'sinatra/activerecord'
 
-def init_db
-  @db = SQLite3::Database.new 'Leprosorium.db'
-  @db.results_as_hash = true
-end
+set :database, "sqlite3:barbershop.db"
 
-before do
-  init_db
-end
-
-configure do
-  init_db
-  @db.execute 'CREATE TABLE IF NOT EXISTS posts 
-  (
-    id  INTEGER PRIMARY KEY AUTOINCREMENT,
-    created_date DATE,
-    content TEXT
-  )'
+class Client < ActiveRecord::Base
 end
 
 get '/' do
   erb 'Can you handle a '
 end
 
-
-get '/new' do
-  erb :new
-end
-
-post '/new' do
-  content = params[:content]
-
-  erb "You typed #{content}"
-end
