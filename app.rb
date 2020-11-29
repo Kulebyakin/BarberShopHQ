@@ -12,6 +12,6 @@ class Barber < ActiveRecord::Base
 end
 
 get '/' do
-  erb 'Can you handle a '
+  erb :index
 end
 
